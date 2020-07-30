@@ -1,11 +1,16 @@
 package com.imooc.order.controller;
 
+import com.imooc.order.entity.ProductInfo;
+import com.imooc.order.feign.ProductClient;
+import java.awt.PageAttributes.MediaType;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,7 +29,10 @@ public class ClientController {
 //  private LoadBalancerClient loadBalancerClient;
 
   @Autowired
-  private RestTemplate restTemplate;
+  private ProductClient productClient;
+
+//  @Autowired
+//  private RestTemplate restTemplate;
 
   @GetMapping("/getProductMsg")
   public String msg(){
@@ -40,9 +48,16 @@ public class ClientController {
 //    String result = restTemplate.getForObject("http://localhost:8082/msg",String.class);
 
     //3.第三种方式（用loadBalanced注解，可以在restBalance直接使用应用名称）
-    String result = restTemplate.getForObject("http://PRODUCT1/msg",String.class);
+//    String result = restTemplate.getForObject("http://PRODUCT1/msg",String.class);
 
+    String result = productClient.productMsg();
     return result;
   }
+
+  @GetMapping(value = "findList",produces = {"application/json;charset=UTF-8"})
+  public List<ProductInfo> findList(@RequestParam(value = "productIdList") List<String> productIdList){
+    return productClient.findList(productIdList);
+  }
+
 
 }
