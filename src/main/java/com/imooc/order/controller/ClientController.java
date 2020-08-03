@@ -1,8 +1,10 @@
 package com.imooc.order.controller;
 
+import com.imooc.order.dto.CartDTO;
 import com.imooc.order.entity.ProductInfo;
 import com.imooc.order.feign.ProductClient;
 import java.awt.PageAttributes.MediaType;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -59,5 +61,10 @@ public class ClientController {
     return productClient.findList(productIdList);
   }
 
+  @GetMapping("productDecreaseStock")
+  public String productDecreaseStock(){
+    productClient.decreaseStock(Arrays.asList(new CartDTO("164103465734242707",3)));
+    return "ok";
+  }
 
 }
