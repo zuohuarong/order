@@ -13,6 +13,7 @@ import com.imooc.order.service.OrderService;
 import com.imooc.order.utils.KeyUtil;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
@@ -81,5 +82,11 @@ public class OrderServiceImpl implements OrderService {
     orderMasterRepository.save(orderMaster);
 
     return orderDTO;
+  }
+
+  public static void main(String[] args) {
+//    Collections.sort();
+//    Comparator
+
   }
 }
